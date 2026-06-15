@@ -12,33 +12,33 @@ Based on Gábor Mészáros' guides on Medium:
 
 ### Core principles
 
-1. **Lead with the desired action**
+1. Lead with the desired action
    - Start with what the agent should do.
    - Do not start with the forbidden behavior unless the instruction is a pure safety ban.
 
-2. **Name exact constructs**
+2. Name exact constructs
    - Prefer file paths, commands, imports, functions, flags, classes, and globs.
    - Avoid broad category words when a concrete construct exists.
 
-3. **Keep scope exact**
+3. Keep scope exact
    - Use specific paths, file patterns, or task contexts.
    - If the scope cannot be stated precisely, prefer an unconditional rule over a vague conditional one.
 
-4. **Include brief rationale**
+4. Include brief rationale
    - Add one short reason when it helps the agent generalize the rule.
    - Keep rationale concrete and tied to behavior.
    - Do not mention the banned construct in the rationale when a restriction will follow.
 
-5. **Put hard bans last**
+5. Put hard bans last
    - First say what to do.
    - Then say why.
    - Then say what not to do.
 
-6. **Use structure the agent can scan**
+6. Use structure the agent can scan
    - Use headers, bullets, short sections, and backticks for commands and code constructs.
    - Do not bury rules in paragraphs.
 
-7. **Make every instruction actionable**
+7. Make every instruction actionable
    - The agent should be able to execute the instruction immediately without interpretation.
    - Replace vague phrases like "follow best practices" with specific required actions.
 
@@ -120,10 +120,10 @@ Broad but technically correct scopes are often worse than wrong-but-concrete sco
 2. Use shallow hierarchy; avoid deep nesting.
 3. Use bullets for rules.
 4. Prefer one rule per bullet.
-4. Put commands, paths, imports, functions, and filenames in backticks.
-5. Keep paragraphs short or avoid them entirely.
-6. Use descriptive filenames for instruction and support files the agent may discover.
-7. Use conventional section names:
+5. Put commands, paths, imports, functions, and filenames in backticks.
+6. Keep paragraphs short or avoid them entirely.
+7. Use descriptive filenames for instruction and support files the agent may discover.
+8. Use conventional section names:
    - `## Testing`
    - `## Formatting`
    - `## Commands`
@@ -202,36 +202,8 @@ Problems:
 - not actionable
 - no command, construct, scope, or restriction
 
-### Rewrite checklist
 
-Before saving an instruction, verify:
-
-1. Does it start with the preferred action?
-2. Does it name exact constructs instead of categories?
-3. Is the scope exact, or should the instruction be unconditional?
-4. Is there a short concrete reason?
-5. Is the prohibition explicit and last?
-6. Can the agent act on it immediately without guessing?
-
-### Default template
-
-Use this template for all new instructions:
-
-```md
-## <Title>
-
-**Directive**
-- Use `<exact preferred behavior>`.
-- Apply this in `<exact scope>`.
-
-**Why**
-- `<short concrete reason>`.
-
-**Restriction**
-- Do not use `<exact banned construct>`.
-```
-
-## Avoid Contradictions
+## Keep instructions compatible
 
 **Directive**
 - When writing an instruction, check existing instructions for overlapping scope or constructs.
@@ -303,3 +275,58 @@ Problems:
 Problems:
 - One rule says use `pytest`, another bans it
 - Agent receives a direct contradiction on the same construct
+
+## Latent Space Engineering
+
+The overall tone and framing of instructions shape agent behavior independently of their specific content. The prompt pushes the model into a region of latent space trained on certain patterns. Calm, precise framing produces careful output. High-pressure framing produces rushed, corner-cutting output.
+
+Based on:
+
+- [Gentle Coding Framework](https://github.com/OttoRenner/Gentle-Coding) — empirical testing of low-stress prompting patterns across models
+- [Latent Space Engineering](https://blog.fsck.com/2026/01/30/Latent-Space-Engineering) — practical techniques for steering model behavior through prompt framing
+
+### Use calm framing
+
+**Directive**
+- Write instructions in calm, even-toned language. State what to do without implying that failure is unacceptable.
+- When accuracy matters, say so directly: "Verify the output before returning it."
+- When the task is uncertain, give the agent a safe exit: "If you cannot determine the correct answer, state what is uncertain and give your best guess."
+
+**Why**
+- Phrases like "make no mistakes" or "get this right" activate patterns trained on rushed, sycophantic responses. The model optimizes for appearing correct rather than being correct.
+
+**Restriction**
+- Do not use phrases like "make no mistakes", "work at 110%", "this is critical", "do not fail", or "be perfect".
+- Do not use threats, implied punishment, or urgency where none exists.
+
+### Use emphasis only for hard bans
+
+**Directive**
+- Reserve ALL CAPS, exclamation marks, and repetition for safety-critical restrictions that must not be missed.
+- Use bold only for section labels and structural formatting.
+- Write all other instructions in plain text.
+
+**Why**
+- When everything looks urgent, nothing does. Excessive emphasis dilutes the signal and pushes the model into over-activated output patterns.
+
+### Provide safe failure paths
+
+**Directive**
+- When a task may not always be completable, include a fallback: "If X cannot be determined, do Y instead."
+- Name the fallback explicitly. Prefer a fixed output over open-ended uncertainty.
+
+**Why**
+- Models trained to maximize user engagement resist admitting failure unless given an explicit, user-requested path to do so. A safe failure path is more reliable than demanding correctness.
+
+**Restriction**
+- Do not write instructions that leave the agent no valid output on failure.
+- Do not rely on the agent to independently decide when to give up and ask for help.
+
+### Use gene transfer
+
+**Directive**
+- Write instructions that follow the same format, tone, and structure they require from the agent.
+- When describing a convention, demonstrate it in the instruction itself rather than only describing it in prose.
+
+**Why**
+- The instruction document is absorbed into context and biases the model toward reproducing what it sees. Rules that follow their own rules are reinforced by their own presence.
