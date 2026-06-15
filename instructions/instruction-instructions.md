@@ -2,13 +2,15 @@
 
 Write instructions for the agent as operational rules, not human-oriented prose. Favor precision, structure, and explicit actions over broad guidance.
 
-Based on Gábor Mészáros' guides on Medium
+## Gábor's rules
+
+Based on Gábor Mészáros' guides on Medium:
 
 - [Claude.md Best Practices](https://cleverhoods.medium.com/claude-md-best-practices-7-formatting-rules-for-the-machine-a591afc3d9a9)
 - [Do NOT Think of a Pink Elephant](https://cleverhoods.medium.com/do-not-think-of-a-pink-elephant-7d40a26cd072)
 - [Instruction Best Practices: Precision Beats Clarity](https://cleverhoods.medium.com/instruction-best-practices-precision-beats-clarity-e1bcae806671)
 
-## Core principles
+### Core principles
 
 1. **Lead with the desired action**
    - Start with what the agent should do.
@@ -40,7 +42,7 @@ Based on Gábor Mészáros' guides on Medium
    - The agent should be able to execute the instruction immediately without interpretation.
    - Replace vague phrases like "follow best practices" with specific required actions.
 
-## Default instruction format
+### Default instruction format
 
 Use this format by default for behavioral instructions. Simpler positive-only rules can use a shorter form, but this should be the standard starting point.
 
@@ -58,9 +60,9 @@ Use this format by default for behavioral instructions. Simpler positive-only ru
 - Do not use `<exact banned construct, command, import, API, or pattern>`.
 ```
 
-## Rules for each section
+### Rules for each section
 
-### Directive
+#### Directive
 
 - Must come first.
 - Must name the exact preferred behavior.
@@ -71,7 +73,7 @@ Use this format by default for behavioral instructions. Simpler positive-only ru
   - APIs like `stripe.Customer.create()`
   - globs like `tests/integration/**/*.py`
 
-### Why
+#### Why
 
 - Keep to one sentence or one bullet.
 - Explain the operational reason, not philosophy.
@@ -79,7 +81,7 @@ Use this format by default for behavioral instructions. Simpler positive-only ru
 - Do not mention the prohibited construct if the instruction also has a restriction.
 - Reinforce why the preferred behavior works, not why the banned behavior is bad.
 
-### Restriction
+#### Restriction
 
 - Put prohibitions after the directive and rationale.
 - Name the exact banned construct.
@@ -94,7 +96,7 @@ Use this format by default for behavioral instructions. Simpler positive-only ru
   - if you must
   - generally
 
-## Scope rules
+### Scope rules
 
 Good scopes are exact and greppable:
 
@@ -112,7 +114,7 @@ If you cannot write an exact scope, use an unconditional instruction instead.
 
 Broad but technically correct scopes are often worse than wrong-but-concrete scopes because they activate too many associations and dilute the signal.
 
-## Formatting rules
+### Formatting rules
 
 1. Use `##` headings for instruction blocks.
 2. Use shallow hierarchy; avoid deep nesting.
@@ -129,7 +131,7 @@ Broad but technically correct scopes are often worse than wrong-but-concrete sco
    - `## Boundaries`
    - `## <Specific rule title>`
 
-## Good examples
+### Good examples
 
 ```md
 ## Testing with real payment clients
@@ -170,7 +172,7 @@ Broad but technically correct scopes are often worse than wrong-but-concrete sco
 - Do not use `git reset --hard` or force-push shared branches.
 ```
 
-## Bad examples
+### Bad examples
 
 ```md
 When working with services, avoid mocks if possible because real behavior is usually better.
@@ -200,7 +202,7 @@ Problems:
 - not actionable
 - no command, construct, scope, or restriction
 
-## Rewrite checklist
+### Rewrite checklist
 
 Before saving an instruction, verify:
 
@@ -211,7 +213,7 @@ Before saving an instruction, verify:
 5. Is the prohibition explicit and last?
 6. Can the agent act on it immediately without guessing?
 
-## Default template
+### Default template
 
 Use this template for all new instructions:
 
@@ -228,3 +230,76 @@ Use this template for all new instructions:
 **Restriction**
 - Do not use `<exact banned construct>`.
 ```
+
+## Avoid Contradictions
+
+**Directive**
+- When writing an instruction, check existing instructions for overlapping scope or constructs.
+- If a shared construct already has a rule, align the new instruction with the existing one.
+- When two rules conflict, keep the more specific one and remove or merge the other.
+
+**Why**
+- Contradictory rules activate competing associations and cause unpredictable agent behavior.
+
+**Restriction**
+- Do not leave overlapping instructions that disagree.
+- Do not resolve contradictions with escape hatches like "use your best judgment."
+
+**Good examples**
+
+```md
+## Linting
+
+**Directive**
+- Run `eslint --fix` on TypeScript files before committing.
+
+**Why**
+- Enforces the repository's lint rules automatically.
+```
+
+Consistent with:
+
+```md
+## Formatting
+
+**Directive**
+- Run `prettier --write` on Markdown and JSON files before committing.
+
+**Why**
+- Keeps documentation and config files consistently formatted.
+```
+
+Scopes don't overlap and neither contradicts the other.
+
+**Bad examples**
+
+```md
+## Linting
+
+**Directive**
+- Run `eslint --fix` on TypeScript files before committing.
+
+**Restriction**
+- Do not run `eslint --fix` on any file.
+```
+
+Problems:
+- Same instruction prescribes and bans the same construct
+- Agent cannot act without violating one of the two rules
+
+```md
+## Testing
+
+**Directive**
+- Use `pytest` to run tests in `tests/`.
+
+**Why**
+- This is the project's configured test runner.
+
+**Restriction**
+- Do not use `pytest` in any test file.
+```
+
+Problems:
+- One rule says use `pytest`, another bans it
+- Agent receives a direct contradiction on the same construct
