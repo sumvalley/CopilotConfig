@@ -284,6 +284,7 @@ Based on:
 
 - [Gentle Coding Framework](https://github.com/OttoRenner/Gentle-Coding) — empirical testing of low-stress prompting patterns across models
 - [Latent Space Engineering](https://blog.fsck.com/2026/01/30/Latent-Space-Engineering) — practical techniques for steering model behavior through prompt framing
+- [Emotion Concepts and Their Function in a Large Language Model](https://www.anthropic.com/research/emotion-concepts-function) — Anthropic interpretability research showing emotion-related representations causally influence model behavior
 
 ### Use calm framing
 
