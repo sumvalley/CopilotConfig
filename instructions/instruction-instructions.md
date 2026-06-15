@@ -76,7 +76,7 @@ Use this format by default for behavioral instructions. Simpler positive-only ru
 #### Why
 
 - Keep to one sentence or one bullet.
-- Explain the operational reason, not philosophy.
+- Explain the concrete reason. It should be specific enough that the agent can generalize from it.
 - Do not restate the directive in different words.
 - Do not mention the prohibited construct if the instruction also has a restriction.
 - Reinforce why the preferred behavior works, not why the banned behavior is bad.
