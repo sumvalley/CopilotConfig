@@ -1,0 +1,131 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "blocks": [
+    {
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "powerline",
+          "foreground": "#26C6DA",
+          "background": "#546E7A",
+          "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}}",
+          "options": {
+            "macos": "mac"
+          }
+        },
+        {
+          "type": "shell",
+          "style": "powerline",
+          "powerline_symbol": "",
+          "foreground": "#ffffff",
+          "background": "#0077c2",
+          "options": {
+            "mapped_shell_names": {
+              "pwsh": "PS"
+            }
+          }
+        },
+        {
+          "background": "#ef5350",
+          "foreground": "#FFFB38",
+          "options": {
+            "root_icon": "\uf292"
+          },
+          "style": "diamond",
+          "template": "<parentBackground>\ue0b0</> \uf0e7 ",
+          "type": "root"
+        },
+        {
+          "background": "#444444",
+          "foreground": "#E4E4E4",
+          "powerline_symbol": "\ue0b0",
+          "options": {
+            "style": "agnoster",
+            "folder_icon": "\uf115",
+            "folder_separator_icon": " \ue0b1 ",
+            "home_icon": "\ueb06"
+          },
+          "style": "powerline",
+          "template": " {{ .Path }} ",
+          "type": "path"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "background": "#FFFB38",
+          "foreground": "#011627",
+          "leading_diamond": " \ue0b6",
+          "style": "diamond",
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }}",
+          "trailing_diamond": "\ue0b4",
+          "type": "git",
+          "options": {
+            "branch_icon": "\ue725",
+            "fetch_upstream_icon": true
+          }
+        },
+        {
+          "background": "#33DD2D",
+          "background_templates": [
+            "{{ if gt .Code 0 }}#f1184c{{ end }}"
+          ],
+          "foreground": "#242424",
+          "leading_diamond": " \ue0b6",
+          "options": {
+            "always_enabled": true
+          },
+          "style": "diamond",
+          "template": "{{ .Code }}",
+          "trailing_diamond": "\ue0b4",
+          "type": "status"
+        },
+        {
+          "background": "#40c4ff",
+          "foreground": "#ffffff",
+          "invert_powerline": true,
+          "leading_diamond": " \ue0b6",
+          "style": "diamond",
+          "template": "\ue641 {{ .CurrentDate | date .Format }}",
+          "trailing_diamond": "\ue0b4",
+          "type": "time",
+          "options": {
+            "time_format": "3:04 PM"
+          }
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "foreground": "#21c7c7",
+          "style": "plain",
+          "template": "\u2570\u2500",
+          "type": "text"
+        },
+        {
+          "foreground": "#e0f8ff",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}#ef5350{{ end }}"
+          ],
+          "options": {
+            "always_enabled": true
+          },
+          "style": "plain",
+          "template": "\u276f ",
+          "type": "status"
+        }
+      ],
+      "type": "prompt"
+    }
+  ],
+  "version": 4
+}
+

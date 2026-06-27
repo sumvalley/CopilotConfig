@@ -1,2 +1,2 @@
-# CopilotConfig
-My personal copilot configuration
+# Conifuration
+My personal configuration
