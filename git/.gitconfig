@@ -1,0 +1,13 @@
+[user]
+    name  = SumValley
+    email = sum@valley
+
+[core]
+    editor = nvim
+    autocrlf = input
+
+[init]
+    defaultBranch = main
+
+[push]
+    autoSetupRemote = true

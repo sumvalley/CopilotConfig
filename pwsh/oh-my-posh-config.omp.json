@@ -5,11 +5,18 @@
       "alignment": "left",
       "segments": [
         {
+          "foreground": "#21c7c7",
+          "style": "plain",
+          "template": "\u256d\u2500",
+          "type": "text"
+        },
+        {
           "type": "os",
           "style": "powerline",
+          "powerline_symbol": "\ue0b0",
           "foreground": "#26C6DA",
           "background": "#546E7A",
-          "template": " {{ if .WSL }}WSL at {{ end }}{{.Icon}}",
+          "template": "{{ if .WSL }}WSL at {{ end }}{{.Icon}} ",
           "options": {
             "macos": "mac"
           }
@@ -19,12 +26,7 @@
           "style": "powerline",
           "powerline_symbol": "",
           "foreground": "#ffffff",
-          "background": "#0077c2",
-          "options": {
-            "mapped_shell_names": {
-              "pwsh": "PS"
-            }
-          }
+          "background": "#0077c2"
         },
         {
           "background": "#ef5350",
@@ -61,11 +63,11 @@
           "foreground": "#011627",
           "leading_diamond": " \ue0b6",
           "style": "diamond",
-          "template": "{{ .UpstreamIcon }}{{ .HEAD }}",
+          "template": "{{ .UpstreamIcon }} {{ .HEAD }}",
           "trailing_diamond": "\ue0b4",
           "type": "git",
           "options": {
-            "branch_icon": "\ue725",
+            "branch_icon": "\ue725 ",
             "fetch_upstream_icon": true
           }
         },

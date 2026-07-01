@@ -1,0 +1,52 @@
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{md,yaml,yml,json,xml}]
+indent_size = 2
+
+[*.cs]
+# IDE0001 - Simplify name (System.String --> String)
+dotnet_diagnostic.IDE0001.severity = suggestion
+
+# IDE0002 - Simplify member access (ClassName.Field --> Field)
+dotnet_diagnostic.IDE0002.severity = info
+
+# IDE0003 - Name can be simplified (this.Field --> Field)
+dotnet_style_qualification_for_field = false:info
+dotnet_style_qualification_for_property = false:info
+dotnet_style_qualification_for_method = false:info
+dotnet_style_qualification_for_event = false:info
+
+# IDE0004 - Remove unnecessary cast ((int)0 --> 0)
+dotnet_diagnostic.IDE0004.severity = info
+
+# IDE0005 - Remove unnecessary using
+dotnet_diagnostic.IDE0005.severity = warning
+
+# IDE0007 - Use var instead of explicit type
+dotnet_diagnostic.IDE0007.severity = none
+
+# IDE0008 - Use explicit type instead of var
+dotnet_diagnostic.IDE0008.severity = none
+
+# Prefer "public static" over "static public"
+csharp_preferred_modifier_order = public_static_first:suggestion
+
+# Prefer x ?? y over x != null ? x : y
+dotnet_style_null_propagation = true:info
+
+# Prefer += over x = x +
+dotnet_style_prefer_compound_assignment = true:suggestion
+
+# Add readonly modifier to unmodified fields
+dotnet_style_readonly_field = true:info
+
+# Always include braces for if/else/for/while blocks
+csharp_prefer_braces = true:warning
