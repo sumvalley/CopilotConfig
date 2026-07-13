@@ -113,7 +113,7 @@
           "type": "text"
         },
         {
-          "foreground": "#e0f8ff",
+          "foreground": "#546E7A",
           "foreground_templates": [
             "{{ if gt .Code 0 }}#ef5350{{ end }}"
           ],
@@ -130,4 +130,3 @@
   ],
   "version": 4
 }
-
